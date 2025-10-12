@@ -1,5 +1,5 @@
-from .supabase_client import get_supabase
-from .config import settings
+from supabase_client import get_supabase
+from config import settings
 
 sb = get_supabase()
 

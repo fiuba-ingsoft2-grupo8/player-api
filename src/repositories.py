@@ -1,5 +1,5 @@
 from typing import Dict, Any, List, Optional
-from .supabase_client import get_supabase
+from supabase_client import get_supabase
 
 sb = get_supabase()
 

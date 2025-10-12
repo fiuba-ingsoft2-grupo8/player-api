@@ -1,5 +1,5 @@
 from supabase import create_client, Client
-from .config import settings
+from config import settings
 
 def get_supabase() -> Client:
     if not settings.supabase_url or not settings.supabase_service_role_key:

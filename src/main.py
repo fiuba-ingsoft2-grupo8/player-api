@@ -1,10 +1,10 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
-from .config import settings
-from . import repositories as repo
-from . import schemas as s
-from .utils import make_audio_url, make_image_url
+from config import settings
+import repositories as repo
+import schemas as s
+from utils import make_audio_url, make_image_url
 
 app = FastAPI(title="Player API", version="1.0.0")
 
