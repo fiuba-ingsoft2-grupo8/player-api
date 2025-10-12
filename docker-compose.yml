@@ -1,9 +1,22 @@
-version: "3.9"
+name: melodia-player-api
 services:
-  api:
-    build: .
-    container_name: player_api
-    env_file: .env
-    ports:
-      - "127.0.0.1:8004:8004"
+  player-api:
+    image: player-api:latest
+    container_name: player-api
     restart: unless-stopped
+    environment:
+      - APP_ENV=${APP_ENV}
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY}
+      - AUDIO_BUCKET=${AUDIO_BUCKET}
+      - IMAGES_BUCKET=${IMAGES_BUCKET}
+      - SIGNED_URL_TTL=${SIGNED_URL_TTL}
+    ports:
+      - "8082:8080"
+    networks:
+      - melodia-network
+
+networks:
+  melodia-network:
+    driver: bridge

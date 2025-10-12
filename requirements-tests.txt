@@ -1,0 +1,6 @@
+pytest==8.4.0
+pytest-asyncio==1.2.0
+pytest-cov==7.0.0
+pytest-mock==3.14.0
+httpx==0.28.0
+setuptools==80.9.0
