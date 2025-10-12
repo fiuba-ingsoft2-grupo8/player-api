@@ -6,7 +6,7 @@ from . import repositories as repo
 from . import schemas as s
 from .utils import make_audio_url, make_image_url
 
-app = FastAPI(title="Melodía API", version="1.0.0")
+app = FastAPI(title="Player API", version="1.0.0")
 
 # CORS
 allowed = [o.strip() for o in settings.allowed_origins.split(",")] if settings.allowed_origins else ["*"]
