@@ -3,7 +3,7 @@ import os
 
 class Settings(BaseModel):
     app_env: str = os.getenv("APP_ENV", "development")
-    app_port: int = int(os.getenv("APP_PORT", "8000"))
+    app_port: int = int(os.getenv("APP_PORT", "8004"))
     allowed_origins: str = os.getenv("ALLOWED_ORIGINS", "*")
 
     supabase_url: str = os.getenv("SUPABASE_URL", "")

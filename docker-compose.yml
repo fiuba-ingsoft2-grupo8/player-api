@@ -2,8 +2,8 @@ version: "3.9"
 services:
   api:
     build: .
-    container_name: melodia_api
+    container_name: player_api
     env_file: .env
     ports:
-      - "8000:8000"
+      - "8004:8004"
     restart: unless-stopped
