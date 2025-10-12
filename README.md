@@ -4,8 +4,21 @@
 
 - Docker y Docker Compose
 - Python 3.9+ (para desarrollo local y testing)
-- Make
 
-## Estado
+## Tutorial de ejecución
 
-Desarrollo inicial de la API en proceso.
+### Levantar el Microservicio
+
+```bash
+
+docker compose up --build
+
+```
+
+### Bajar el Microservicio
+
+```bash
+
+docker compose down
+
+```
