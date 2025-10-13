@@ -8,11 +8,11 @@ build-system:
 .PHONY: build-system
 
 up: build-system
-	docker compose -f docker-compose.yaml up -d --build --remove-orphans
+	docker compose -f docker-compose.yml up -d --build --remove-orphans
 .PHONY: up
 
 down:
-	docker compose -f docker-compose.yaml down
+	docker compose -f docker-compose.yml down
 .PHONY: down
 
 test:
