@@ -31,3 +31,8 @@ def list_tracks_by_album(album_id: str) -> List[Dict[str, Any]]:
 def get_track_by_id(track_id: str) -> Optional[Dict[str, Any]]:
     r = sb.table("tracks").select("id,title,audio_path,mime_type,album_id").eq("id", track_id).limit(1).execute()
     return r.data[0] if r.data else None
+
+    
+def create_track(track: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    r = sb.table("tracks").insert(track).execute()
+    return r.data[0] if r.data else None
