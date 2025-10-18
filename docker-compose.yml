@@ -1,6 +1,9 @@
 name: melodia-player-api
 services:
   player-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: player-api:latest
     container_name: player-api
     restart: unless-stopped

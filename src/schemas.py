@@ -3,10 +3,8 @@ from typing import Optional, List
 
 class Track(BaseModel):
     id: str
-    title: str
     duration_ms: Optional[int] = None
     mime_type: Optional[str] = None
-    explicit: bool
     audio_path: str
     audio_url: Optional[str] = None  # signed URL (se setea al vuelo)
 
@@ -27,3 +25,9 @@ class AlbumWithTracks(BaseModel):
 
 class Health(BaseModel):
     status: str
+
+class TrackCreate(BaseModel):
+    id: str
+    duration_ms: Optional[int] = None
+    mime_type: Optional[str] = None
+    audio_path: str

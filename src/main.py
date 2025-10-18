@@ -5,10 +5,7 @@ from config import settings
 from dotenv import load_dotenv
 from resources.logger import logger, LOGGING_CONFIG
 import uvicorn
-import controllers.health_controller as health_controller
-import controllers.tracks_controller as tracks_controller
-import controllers.albums_controller as albums_controller
-import controllers.artists_controller as artists_controller
+import controllers.player_controller as player_controller
 
 logger.info("Load configurations")
 load_dotenv()
@@ -31,10 +28,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(health_controller.router, prefix="/health", tags=["health"])
-app.include_router(tracks_controller.router, prefix="/tracks", tags=["tracks"])
-app.include_router(albums_controller.router, prefix="/albums", tags=["albums"])
-app.include_router(artists_controller.router, prefix="/artists", tags=["artists"])
+app.include_router(player_controller.router, prefix="/player", tags=["player"])
 
 if __name__ == "__main__":
     logger.info("Starting Fast API")
