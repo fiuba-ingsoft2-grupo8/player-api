@@ -15,6 +15,7 @@ services:
       - AUDIO_BUCKET=${AUDIO_BUCKET}
       - IMAGES_BUCKET=${IMAGES_BUCKET}
       - SIGNED_URL_TTL=${SIGNED_URL_TTL}
+      - JWT_SECRET=${JWT_SECRET}
     ports:
       - "8082:8080"
     networks:

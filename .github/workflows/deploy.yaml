@@ -40,4 +40,5 @@ jobs:
             -e AUDIO_BUCKET="${{ secrets.AUDIO_BUCKET }}" \
             -e IMAGES_BUCKET="${{ secrets.IMAGES_BUCKET }}" \
             -e SIGNED_URL_TTL="${{ secrets.SIGNED_URL_TTL }}" \
+            -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
             jandresen99/player-api:latest
