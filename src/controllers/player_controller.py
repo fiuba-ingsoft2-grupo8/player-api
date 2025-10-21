@@ -14,7 +14,7 @@ BUCKET = os.getenv("PLAYER_BUCKET", "tracks")
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
 
 
-@router.post("/tracks", status_code=201)
+@router.post("/tracks/upload", status_code=201)
 async def upload_track(
     track_id: str = Form(...),
     audio: UploadFile = File(...),
@@ -27,6 +27,10 @@ async def upload_track(
     ext = ""
     if audio.filename and "." in audio.filename:
         ext = "." + audio.filename.rsplit(".", 1)[-1].lower()
+    
+    if ext != ".mp3":
+        raise HTTPException(400, "El archivo debe ser un MP3")
+
     object_path = f"{track_id}{ext}"
 
     content = await audio.read()
@@ -42,17 +46,6 @@ async def upload_track(
     except Exception as e:
         raise HTTPException(500, f"Error subiendo archivo: {e}")
 
-    # DB
-    try:
-        db_res = supabase.table("tracks").insert({"id": track_id, "audio_path": object_path}).execute()
-    except APIError as e:
-        if getattr(e, "code", None) in ("23505", 23505):
-            raise HTTPException(409, "Track ya existe (id o audio_path duplicado)")
-        raise HTTPException(500, f"Error guardando en DB: {getattr(e, 'message', str(e))}")
-
-    if not db_res or not getattr(db_res, "data", None):
-        raise HTTPException(500, "Insert en DB no devolvió datos")
-
     public_url = supabase.storage.from_(BUCKET).get_public_url(object_path)
     return {
         "id": track_id,
@@ -64,13 +57,5 @@ async def upload_track(
 
 @router.get("/tracks/{track_id}")
 def get_track_url(track_id: str):
-    """Devuelve la URL firmada (válida por 15 minutos) del track."""
-    # Buscar el path en la DB
-    db_res = supabase.table("tracks").select("audio_path").eq("id", track_id).execute()
-    if not db_res.data:
-        raise HTTPException(404, "Track no encontrado")
-
-    audio_path = db_res.data[0]["audio_path"]
-
-    public_url = supabase.storage.from_(BUCKET).get_public_url(audio_path)
+    public_url = supabase.storage.from_(BUCKET).get_public_url(track_id + ".mp3")
     return {"url": public_url}
