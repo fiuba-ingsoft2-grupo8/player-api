@@ -1,6 +1,7 @@
 import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from config import settings
 from dotenv import load_dotenv
 from resources.logger import logger, LOGGING_CONFIG
@@ -29,6 +30,14 @@ app.add_middleware(
 )
 
 app.include_router(player_controller.router, prefix="/player", tags=["player"])
+
+# Health check endpoint
+@app.get("/health", tags=["health"])
+async def health_check():
+    """
+    Health check endpoint to verify the API is running.
+    """
+    return JSONResponse(status_code=200, content={})
 
 if __name__ == "__main__":
     logger.info("Starting Fast API")
