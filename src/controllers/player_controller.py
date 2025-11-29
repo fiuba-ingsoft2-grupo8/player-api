@@ -1,3 +1,4 @@
+# Imports.
 import os
 import mimetypes
 from dotenv import load_dotenv
@@ -6,16 +7,20 @@ from supabase import create_client, Client
 from fastapi import HTTPException
 from postgrest.exceptions import APIError
 
+# Router setup.
 router = APIRouter()
 
+# Supabase client setup.
 load_dotenv()
 
+# Environment variables for Supabase.
 SUPABASE_URL = os.environ["SUPABASE_URL"]
 SUPABASE_SERVICE_ROLE_KEY = os.environ["SUPABASE_SERVICE_ROLE_KEY"]
 
+# Create Supabase client.
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
 
-
+# Endpoint to upload audio or video tracks.
 @router.post("/tracks/upload", status_code=201)
 async def upload_track(
     track_id: str = Form(...),
@@ -70,14 +75,11 @@ async def upload_track(
         "public_url": public_url,
     }
 
-
+# Endpoint to get the URL of a track by its ID.
 @router.get("/tracks/{track_id}")
 def get_track_url(track_id: str):
-    # 1) Buscar en bucket tracks (.mp3)
     audio_ext = ".mp3"
     audio_path = f"{track_id}{audio_ext}"
-
-    # Intentamos ver si existe el archivo .mp3
     try:
         files = supabase.storage.from_("tracks").list("", {"search": track_id})
         if any(f["name"] == audio_path for f in files):
@@ -90,7 +92,6 @@ def get_track_url(track_id: str):
     except Exception:
         pass
 
-    # 2) Si no está en tracks, buscamos en videos con extensiones múltiples
     video_exts = [".mp4", ".mov", ".avi"]
     files = supabase.storage.from_("videos").list("", {"search": track_id})
 
@@ -104,5 +105,4 @@ def get_track_url(track_id: str):
                     "url": url,
                 }
 
-    # 3) Si no existe en ningún lado → 404
     raise HTTPException(404, f"No se encontró ningún archivo para track_id '{track_id}'")

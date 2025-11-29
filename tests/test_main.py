@@ -1,5 +1,7 @@
+# Imports.
 import pytest
 
+# Test class for health endpoint.
 class TestHealth:
     def test_health(self, client):
         response = client.get("/health")

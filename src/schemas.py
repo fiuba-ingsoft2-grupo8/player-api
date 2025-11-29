@@ -1,18 +1,20 @@
+# Imports.
 from pydantic import BaseModel
 from typing import Optional, List
 
+# Schemas.
 class Track(BaseModel):
     id: str
     duration_ms: Optional[int] = None
     mime_type: Optional[str] = None
     audio_path: str
-    audio_url: Optional[str] = None  # signed URL (se setea al vuelo)
+    audio_url: Optional[str] = None
 
 class Album(BaseModel):
     id: str
     title: str
     cover_path: Optional[str] = None
-    cover_url: Optional[str] = None  # signed URL
+    cover_url: Optional[str] = None
 
 class Artist(BaseModel):
     id: str

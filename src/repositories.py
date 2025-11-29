@@ -1,8 +1,11 @@
+# Imports.
 from typing import Dict, Any, List, Optional
 from supabase_client import get_supabase
 
+# Supabase client.
 sb = get_supabase()
 
+# Getters.
 def get_artist_by_name(name: str) -> Optional[Dict[str, Any]]:
     r = sb.table("artists").select("id,name").eq("name", name).limit(1).execute()
     return r.data[0] if r.data else None
@@ -19,6 +22,11 @@ def get_artist_by_id(artist_id: str) -> Optional[Dict[str, Any]]:
     r = sb.table("artists").select("id,name").eq("id", artist_id).limit(1).execute()
     return r.data[0] if r.data else None
 
+def get_track_by_id(track_id: str) -> Optional[Dict[str, Any]]:
+    r = sb.table("tracks").select("id,title,audio_path,mime_type,album_id").eq("id", track_id).limit(1).execute()
+    return r.data[0] if r.data else None
+
+# Listers.
 def list_tracks_by_album(album_id: str) -> List[Dict[str, Any]]:
     # Podés cambiar el orden (por created_at, title, position en playlist, etc.)
     r = sb.table("tracks") \
@@ -28,11 +36,7 @@ def list_tracks_by_album(album_id: str) -> List[Dict[str, Any]]:
         .execute()
     return r.data or []
 
-def get_track_by_id(track_id: str) -> Optional[Dict[str, Any]]:
-    r = sb.table("tracks").select("id,title,audio_path,mime_type,album_id").eq("id", track_id).limit(1).execute()
-    return r.data[0] if r.data else None
-
-    
+# Creators.    
 def create_track(track: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     r = sb.table("tracks").insert(track).execute()
     return r.data[0] if r.data else None

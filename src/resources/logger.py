@@ -16,14 +16,15 @@ Environment variables:
   Defaults to INFO if not specified.
 """
 
+# Imports.
 import logging
 import logging.config
 import os
 
+# Retrieve log level from environment variable, defaulting to INFO
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
 
-# Logging configuration dictionary following Python's dictConfig format
-# This configuration sets up console logging with timestamps and appropriate levels
+# Define logging configuration dictionary
 LOGGING_CONFIG = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -63,5 +64,6 @@ LOGGING_CONFIG = {
     },
 }
 
+# Apply logging configuration.
 logging.config.dictConfig(LOGGING_CONFIG)
 logger = logging.getLogger(__name__)
